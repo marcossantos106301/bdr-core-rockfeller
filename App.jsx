@@ -196,6 +196,36 @@ export default function App() {
           <p><strong>Nome:</strong> {selectedLead.name}</p>
           <p><strong>Contato:</strong> {selectedLead.contact}</p>
           <p><strong>Telefone:</strong> {selectedLead.phone}</p>
+          <button onClick={() => setSelectedLead(null)} style={{ marginTop: '20px', padding: '8px 16px', background: '#0B192C', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Fechar</button>
+        </div>
+      )}
+
+      {showImportModal && (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000 }}>
+          <div style={{ background: '#fff', width: '500px', padding: '25px', borderRadius: '8px' }}>
+            <h3 style={{ margin: '0 0 15px 0', color: '#0B192C' }}>📥 Importação em Massa de Leads (CSV)</h3>
+            <p style={{ fontSize: '13px', color: '#666' }}>Selecione o ficheiro contendo a lista de escolas para o pipeline.</p>
+            <input type="file" style={{ margin: '15px 0' }} />
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+              <button onClick={() => setShowImportModal(false)} style={{ padding: '8px 16px', background: '#cbd5e1', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Cancelar</button>
+              <button onClick={() => setShowImportModal(false)} style={{ padding: '8px 16px', background: '#0284c7', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>Importar Leads</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showComposeEmail && (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000 }}>
+          <div style={{ background: '#fff', width: '550px', padding: '25px', borderRadius: '8px' }}>
+            <h3 style={{ margin: '0 0 15px 0', color: '#0B192C' }}>Novo E-mail (Outlook Rockfeller)</h3>
+            <input type="text" placeholder="Para: escola@dominio.com.br" style={{ width: '100%', padding: '8px', marginBottom: '10px', border: '1px solid #cbd5e1', borderRadius: '4px' }} />
+            <input type="text" placeholder="Assunto" style={{ width: '100%', padding: '8px', marginBottom: '10px', border: '1px solid #cbd5e1', borderRadius: '4px' }} />
+            <textarea rows="5" placeholder="Escreva sua mensagem..." style={{ width: '100%', padding: '8px', marginBottom: '15px', border: '1px solid #cbd5e1', borderRadius: '4px' }}></textarea>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+              <button onClick={() => setShowComposeEmail(false)} style={{ padding: '8px 16px', background: '#cbd5e1', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Cancelar</button>
+              <button onClick={() => setShowComposeEmail(false)} style={{ padding: '8px 16px', background: '#0078D4', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>Enviar E-mail</button>
+            </div>
+          </div>
         </div>
       )}
     </div>
