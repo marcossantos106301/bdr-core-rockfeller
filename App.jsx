@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('crm');
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [selectedLead, setSelectedLead] = useState(null);
   const [timeFilter, setTimeFilter] = useState('mes');
   const [showDiscarded, setShowDiscarded] = useState(false);
@@ -13,11 +13,11 @@ export default function App() {
   const [showComposeEmail, setShowComposeEmail] = useState(false);
 
   const [leads, setLeads] = useState([
-    { id: 1, name: 'English College', contact: 'Suellen / Kattia', phone: '+55 (47) 3319-2102', stage: 'novo', value: 'R$ 12.000', score: 85 },
-    { id: 2, name: 'Magic Balloon Idiomas', contact: 'Marcos Vinicius', phone: '+55 (11) 98822-1144', stage: 'qualificacao', value: 'R$ 18.000', score: 92 },
-    { id: 3, name: 'Lesser School of English', contact: 'Ana Paula', phone: '+55 (21) 3256-4002', stage: 'reuniao', value: 'R$ 25.000', score: 95 },
-    { id: 4, name: 'Centro Educacional Novo Saber', contact: 'Maiara Venturi', phone: '+55 (47) 3319-2102', stage: 'proposta', value: 'R$ 30.000', score: 90 },
-    { id: 5, name: 'The House English', contact: 'Carlos Eduardo', phone: '+55 (16) 99204-9585', stage: 'fechamento', value: 'R$ 45.000', score: 98 }
+    { id: 1, name: 'English College', contact: 'Suellen / Kattia', phone: '+55 (47) 3319-2102', stage: 'novo', value: 'R$ 12.000', score: 85, notes: 'Interesse forte em expansão regional.' },
+    { id: 2, name: 'Magic Balloon Idiomas', contact: 'Marcos Vinicius', phone: '+55 (11) 98822-1144', stage: 'qualificacao', value: 'R$ 18.000', score: 92, notes: 'Aguardando validação de DRE.' },
+    { id: 3, name: 'Lesser School of English', contact: 'Ana Paula', phone: '+55 (21) 3256-4002', stage: 'reuniao', value: 'R$ 25.000', score: 95, notes: 'Reunião agendada via Microsoft Teams.' },
+    { id: 4, name: 'Centro Educacional Novo Saber', contact: 'Maiara Venturi', phone: '+55 (47) 3319-2102', stage: 'proposta', value: 'R$ 30.000', score: 90, notes: 'Proposta pedagógica enviada.' },
+    { id: 5, name: 'The House English', contact: 'Carlos Eduardo', phone: '+55 (16) 99204-9585', stage: 'fechamento', value: 'R$ 45.000', score: 98, notes: 'Minuta de contrato em análise.' }
   ]);
 
   const emails = [
@@ -29,6 +29,23 @@ export default function App() {
     { school: 'Centro Educacional Novo Saber', operator: 'Maiara Venturi', phone: '+55 (47) 3319-2102', status: 'Aguardando Resposta', date: '27/10/2026', duration: '00:03:20' },
     { school: 'The House English', operator: 'Marcos Eduardo', phone: '+55 (16) 99204-9585', status: 'Aguardando Resposta', date: '22/10/2026', duration: '00:03:03' }
   ];
+
+  if (!isLoggedIn) {
+    return (
+      <div style={{ minHeight: '100vh', background: '#0B192C', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Arial, sans-serif' }}>
+        <div style={{ background: '#fff', padding: '40px', borderRadius: '12px', width: '400px', textAlign: 'center', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }}>
+          <h2 style={{ color: '#0B192C', marginBottom: '8px' }}>BDR Core Rockfeller</h2>
+          <p style={{ color: '#666', fontSize: '14px', marginBottom: '24px' }}>Plataforma Corporativa de Pré-Vendas</p>
+          <button 
+            onClick={() => setIsLoggedIn(true)}
+            style={{ width: '100%', padding: '12px', background: '#0078D4', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}
+          >
+            Entrar com Microsoft Outlook (@rockfeller.com.br)
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ minHeight: '100vh', background: '#f4f6f9', fontFamily: 'Arial, sans-serif', display: 'flex', flexDirection: 'column' }}>
@@ -182,7 +199,10 @@ export default function App() {
             <h3 style={{ margin: '0 0 15px 0', color: '#0B192C' }}>⚡ Modo Foco - Discador Ativo</h3>
             <h2 style={{ color: '#0284c7' }}>English College</h2>
             <p style={{ color: '#666' }}>Telefone: +55 (47) 3319-2102</p>
-            <button onClick={() => setShowFocusMode(false)} style={{ marginTop: '20px', padding: '10px 20px', background: '#0B192C', color: '#FFC107', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer' }}>Fechar Modo Foco</button>
+            <div style={{ background: '#f8fafc', padding: '15px', borderRadius: '8px', border: '1px solid #e2e8f0', margin: '15px 0', fontSize: '13px' }}>
+              <strong>Script SPIN Selling:</strong> "Olá, vi que vocês possuem forte atuação em idiomas na região..."
+            </div>
+            <button onClick={() => setShowFocusMode(false)} style={{ marginTop: '10px', padding: '10px 20px', background: '#0B192C', color: '#FFC107', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer' }}>Fechar Modo Foco</button>
           </div>
         </div>
       )}
@@ -193,10 +213,18 @@ export default function App() {
             <h3 style={{ margin: 0, color: '#0B192C' }}>Ficha do Lead</h3>
             <button onClick={() => setSelectedLead(null)} style={{ background: 'transparent', border: 'none', fontSize: '18px', cursor: 'pointer' }}>✕</button>
           </div>
-          <p><strong>Nome:</strong> {selectedLead.name}</p>
-          <p><strong>Contato:</strong> {selectedLead.contact}</p>
-          <p><strong>Telefone:</strong> {selectedLead.phone}</p>
-          <button onClick={() => setSelectedLead(null)} style={{ marginTop: '20px', padding: '8px 16px', background: '#0B192C', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Fechar</button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '13px' }}>
+            <p><strong>Nome:</strong> {selectedLead.name}</p>
+            <p><strong>Contato:</strong> {selectedLead.contact}</p>
+            <p><strong>Telefone:</strong> {selectedLead.phone}</p>
+            <p><strong>Valor Estimado:</strong> {selectedLead.value}</p>
+            <p><strong>Score BANT:</strong> {selectedLead.score}</p>
+            <div>
+              <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '4px' }}>Observações / Histórico:</label>
+              <textarea rows="4" defaultValue={selectedLead.notes} style={{ width: '100%', padding: '8px', border: '1px solid #cbd5e1', borderRadius: '4px' }}></textarea>
+            </div>
+          </div>
+          <button onClick={() => setSelectedLead(null)} style={{ marginTop: '20px', width: '100%', padding: '10px', background: '#0B192C', color: '#FFC107', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer' }}>Salvar e Fechar</button>
         </div>
       )}
 
